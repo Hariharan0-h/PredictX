@@ -30,14 +30,35 @@ RANDOM_STATE = 42
 F1_THRESHOLD = 0.85
 
 
+BEST_PARAMS_PATH = RESULTS_DIR / "best_params.json"
+
+# Default hyperparameters — overridden if tune.py has been run
+DEFAULT_CLF_PARAMS = {
+    "n_estimators": 300,
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+}
+
+
+def load_clf_params() -> dict:
+    """Load tuned params from tune.py output if available, else use defaults."""
+    if BEST_PARAMS_PATH.exists():
+        with open(BEST_PARAMS_PATH) as f:
+            data = json.load(f)
+        params = data["params"]
+        print(f"Loaded tuned params from {BEST_PARAMS_PATH} (best CV F1={data['macro_f1']:.4f})")
+        return params
+    print("No best_params.json found — using default hyperparameters.")
+    return DEFAULT_CLF_PARAMS
+
+
 def build_pipeline() -> Pipeline:
+    clf_params = load_clf_params()
     return Pipeline([
         ("scaler", StandardScaler()),
         ("smote", SMOTE(random_state=RANDOM_STATE)),
         ("clf", LGBMClassifier(
-            n_estimators=300,
-            learning_rate=0.05,
-            num_leaves=31,
+            **clf_params,
             random_state=RANDOM_STATE,
             verbose=-1,
         )),
