@@ -17,7 +17,6 @@ from explain import extract_lgbm_and_transform
 
 @pytest.fixture
 def tiny_pipeline():
-    """Fit a minimal pipeline on synthetic binary data."""
     rng = np.random.default_rng(0)
     X = pd.DataFrame(rng.normal(size=(200, 5)), columns=[f"f{i}" for i in range(5)])
     y = pd.Series((rng.random(200) > 0.85).astype(int))
@@ -34,7 +33,6 @@ def tiny_pipeline():
 def test_extract_transform_shape(tiny_pipeline):
     pipe, X, _ = tiny_pipeline
     X_t = extract_lgbm_and_transform(pipe, X)
-    # Transformed matrix must have same number of columns as input
     assert X_t.shape[1] == X.shape[1]
 
 
