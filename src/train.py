@@ -1,6 +1,6 @@
 """
 Task 1.4 — SMOTE-inside-CV LightGBM Pipeline
-Trains a leakage-free pipeline: StandardScaler → SMOTE → LGBMClassifier.
+Trains a leakage-free pipeline: StandardScaler -> SMOTE -> LGBMClassifier.
 SMOTE is applied only within training folds via imblearn.Pipeline.
 Asserts mean Macro F1 >= 0.85.
 Input:  data/features_fused.parquet
@@ -28,11 +28,8 @@ INPUT_PATH = DATA_DIR / "features_fused.parquet"
 TARGET_COL = "Machine failure"
 RANDOM_STATE = 42
 F1_THRESHOLD = 0.85
-
-
 BEST_PARAMS_PATH = RESULTS_DIR / "best_params.json"
 
-# Default hyperparameters — overridden if tune.py has been run
 DEFAULT_CLF_PARAMS = {
     "n_estimators": 300,
     "learning_rate": 0.05,
@@ -46,7 +43,7 @@ def load_clf_params() -> dict:
         with open(BEST_PARAMS_PATH) as f:
             data = json.load(f)
         params = data["params"]
-        print(f"Loaded tuned params from {BEST_PARAMS_PATH} (best CV F1={data['macro_f1']:.4f})")
+        print(f"Loaded tuned params (best CV F1={data['macro_f1']:.4f})")
         return params
     print("No best_params.json found — using default hyperparameters.")
     return DEFAULT_CLF_PARAMS
@@ -86,18 +83,17 @@ def main() -> dict:
     for i, s in enumerate(scores, 1):
         print(f"  Fold {i}: {s:.4f}")
     mean_f1, std_f1 = scores.mean(), scores.std()
-    print(f"\nMacro F1: {mean_f1:.4f} ± {std_f1:.4f}")
+    print(f"\nMacro F1: {mean_f1:.4f} +/- {std_f1:.4f}")
 
     assert mean_f1 >= F1_THRESHOLD, (
-        f"Macro F1 {mean_f1:.4f} is below required threshold {F1_THRESHOLD}. "
-        "Consider tuning hyperparameters or reviewing feature engineering."
+        f"Macro F1 {mean_f1:.4f} below threshold {F1_THRESHOLD}. "
+        f"Run tune.py or review feature engineering."
     )
-    print(f"✓ Macro F1 ≥ {F1_THRESHOLD} — threshold met.")
+    print(f"Macro F1 >= {F1_THRESHOLD} — threshold met.")
 
-    # Refit on full dataset for serialization
     pipe.fit(X, y)
     joblib.dump(pipe, MODELS_DIR / "pipeline.pkl")
-    print(f"Saved pipeline → {MODELS_DIR / 'pipeline.pkl'}")
+    print(f"Saved pipeline -> {MODELS_DIR / 'pipeline.pkl'}")
 
     results = {
         "per_fold_f1": scores.tolist(),
@@ -107,7 +103,7 @@ def main() -> dict:
     }
     with open(RESULTS_DIR / "cv_scores.json", "w") as f:
         json.dump(results, f, indent=2)
-    print(f"Saved CV scores → {RESULTS_DIR / 'cv_scores.json'}")
+    print(f"Saved CV scores -> {RESULTS_DIR / 'cv_scores.json'}")
 
     return results
 
