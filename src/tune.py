@@ -34,6 +34,10 @@ try:
 except ImportError:
     raise ImportError("Install optuna first: pip install optuna")
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from custom_logging import logger
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 RESULTS_DIR = Path(__file__).parent.parent / "results"
 INPUT_PATH = DATA_DIR / "features_fused.parquet"
@@ -83,8 +87,8 @@ def main(n_trials: int = DEFAULT_TRIALS) -> dict:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
     X, y = load_data()
-    print(f"Dataset: {X.shape[0]} samples, {X.shape[1]} features")
-    print(f"Running Optuna sweep — {n_trials} trials...\n")
+    logger.info(f"Dataset: {X.shape[0]} samples, {X.shape[1]} features")
+    logger.info(f"Running Optuna sweep — {n_trials} trials...\n")
 
     study = optuna.create_study(
         direction="maximize",
@@ -98,8 +102,8 @@ def main(n_trials: int = DEFAULT_TRIALS) -> dict:
     )
 
     best = study.best_trial
-    print(f"\nBest Macro F1: {best.value:.4f}")
-    print(f"Best params:   {best.params}")
+    logger.info(f"\nBest Macro F1: {best.value:.4f}")
+    logger.info(f"Best params:   {best.params}")
 
     best_params = {
         "macro_f1": best.value,
@@ -108,7 +112,7 @@ def main(n_trials: int = DEFAULT_TRIALS) -> dict:
     }
     with open(RESULTS_DIR / "best_params.json", "w") as f:
         json.dump(best_params, f, indent=2)
-    print(f"Saved → {RESULTS_DIR / 'best_params.json'}")
+    logger.info(f"Saved → {RESULTS_DIR / 'best_params.json'}")
 
     # Persist study for post-hoc analysis (gitignored via models/ pattern)
     joblib.dump(study, RESULTS_DIR / "tune_study.pkl")
