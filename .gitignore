@@ -34,3 +34,6 @@ Thumbs.db
 # Outputs (generated plots — optional to commit)
 outputs/*.png
 outputs/*.html
+
+# Runtime log files
+logs/
