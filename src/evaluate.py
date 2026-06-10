@@ -12,7 +12,7 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.metrics import PrecisionRecallDisplay, f1_score, precision_recall_curve
+from sklearn.metrics import PrecisionRecallDisplay, classification_report, f1_score, precision_recall_curve
 from sklearn.model_selection import train_test_split
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -92,11 +92,17 @@ def main() -> dict:
     plt.close(fig)
     logger.info(f"Saved PR curve -> {plot_path}")
 
+    y_pred_tuned = (y_scores >= best_threshold).astype(int)
+    report = classification_report(y_test, y_pred_tuned, output_dict=True)
     metrics = {
         "default_threshold_macro_f1": float(f1_default),
         "tuned_threshold":            float(best_threshold),
         "tuned_threshold_macro_f1":   float(f1_tuned),
         "noise_scale":                NOISE_SCALE,
+        "per_class": {
+            "no_failure": report["0"],
+            "failure":    report["1"],
+        },
     }
     with open(RESULTS_DIR / "eval_metrics.json", "w") as f:
         json.dump(metrics, f, indent=2)
