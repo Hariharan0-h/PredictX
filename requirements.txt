@@ -13,3 +13,5 @@ pytest==8.2.2
 pytest-cov==5.0.0
 joblib==1.4.2            # pipeline serialization
 optuna==3.6.1            # hyperparameter tuning
+
+# custom_logging/ — stdlib only (logging, os, datetime); no pip install needed

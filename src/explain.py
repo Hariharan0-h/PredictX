@@ -19,6 +19,10 @@ import pandas as pd
 import shap
 from sklearn.model_selection import train_test_split
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from custom_logging import logger
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 MODELS_DIR = Path(__file__).parent.parent / "models"
 RESULTS_DIR = Path(__file__).parent.parent / "results"
@@ -74,7 +78,7 @@ def main() -> dict:
     if SHAP_SAMPLE and len(X_test_transformed) > SHAP_SAMPLE:
         X_test_transformed = X_test_transformed.sample(SHAP_SAMPLE, random_state=RANDOM_STATE)
 
-    print(f"Computing SHAP values for {len(X_test_transformed)} samples...")
+    logger.info(f"Computing SHAP values for {len(X_test_transformed)} samples...")
     explainer = shap.TreeExplainer(clf)
     shap_values = explainer.shap_values(X_test_transformed)
 
@@ -87,9 +91,9 @@ def main() -> dict:
     top10_idx = np.argsort(mean_abs_shap)[::-1][:10]
     top10 = {feature_cols[i]: float(mean_abs_shap[i]) for i in top10_idx}
 
-    print("\nTop-10 features by mean |SHAP|:")
+    logger.info("Top-10 features by mean |SHAP|:")
     for feat, val in top10.items():
-        print(f"  {val:.4f}  {feat}")
+        logger.info(f"  {val:.4f}  {feat}")
 
     fig, ax = plt.subplots(figsize=(10, 6))
     shap.summary_plot(sv, X_test_transformed, plot_type="bar", show=False)
@@ -97,7 +101,7 @@ def main() -> dict:
     plt.tight_layout()
     plt.savefig(OUTPUTS_DIR / "shap_summary_bar.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved -> {OUTPUTS_DIR / 'shap_summary_bar.png'}")
+    logger.info(f"Saved -> {OUTPUTS_DIR / 'shap_summary_bar.png'}")
 
     fig, ax = plt.subplots(figsize=(10, 8))
     shap.summary_plot(sv, X_test_transformed, show=False)
@@ -105,11 +109,11 @@ def main() -> dict:
     plt.tight_layout()
     plt.savefig(OUTPUTS_DIR / "shap_beeswarm.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved -> {OUTPUTS_DIR / 'shap_beeswarm.png'}")
+    logger.info(f"Saved -> {OUTPUTS_DIR / 'shap_beeswarm.png'}")
 
     with open(RESULTS_DIR / "shap_top10.json", "w") as f:
         json.dump(top10, f, indent=2)
-    print(f"Saved -> {RESULTS_DIR / 'shap_top10.json'}")
+    logger.info(f"Saved -> {RESULTS_DIR / 'shap_top10.json'}")
 
     return top10
 
