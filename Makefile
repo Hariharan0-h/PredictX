@@ -1,4 +1,4 @@
-.PHONY: pipeline tune test clean
+.PHONY: pipeline tune predict drift test coverage clean
 
 # Run the full ML pipeline end-to-end
 pipeline:
@@ -14,9 +14,27 @@ tune:
 	python src/tune.py --trials 50
 	python src/train.py
 
+# Run inference on new data (override INPUT and THRESHOLD as needed)
+# Usage: make predict INPUT=path/to/sensors.csv
+#        make predict INPUT=path/to/sensors.csv THRESHOLD=0.35
+INPUT ?= outputs/predictions.csv
+THRESHOLD ?=
+predict:
+	python src/predict.py --input $(INPUT) $(if $(THRESHOLD),--threshold $(THRESHOLD),)
+
+# Run feature drift detection
+# Usage: make drift NEW=path/to/new_sensors.csv
+NEW ?=
+drift:
+	python src/drift.py --train data/features_fused.parquet --new $(NEW)
+
 # Run the full test suite
 test:
 	pytest tests/ -v
+
+# Run tests with coverage report
+coverage:
+	pytest tests/ -v --cov=src --cov-report=term-missing --cov-report=html:outputs/coverage
 
 # Remove generated data/model artifacts (keeps .gitkeep files)
 clean:

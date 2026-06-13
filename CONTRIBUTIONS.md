@@ -5,7 +5,8 @@
 | Name | Role |
 |---|---|
 | Hariharan | ML Engineer (Member 1) |
-| Vanshika | ML Engineer (Member 2) |
+| Anandhika | ML Engineer (Member 2) |
+| Vanshika | ML Engineer (Member 3) |
 
 ---
 
@@ -39,17 +40,31 @@
 - Added SHAP TreeExplainer explainability (`src/explain.py`) — bar + beeswarm plots, top-10 JSON.
 - Wrote Optuna TPE hyperparameter sweep (`src/tune.py`) — 50 trials, saves `results/best_params.json` for auto-load in train.py.
 
-### Week 3: Inference Pipeline & Full Test Coverage
-- Authored `src/predict.py` — production inference script; loads `pipeline.pkl` + tuned threshold from `eval_metrics.json`, accepts CSV input via CLI, outputs `outputs/predictions.csv` with probabilities and binary predictions.
-- Wrote `tests/test_ingest.py` (7 tests) — covers required sensor columns, binary target, failure rate assertion, null check, and minimum row count.
-- Wrote `tests/test_train.py` (8 tests) — covers imblearn vs sklearn Pipeline guard, step names/types, param loading from file vs default, and end-to-end fit on small data.
-
 ### Week 2: Observability & Test Coverage
 - Wired `custom_logging` structured logger into all 7 src files — replaced all `print()` calls with `logger.info()`.
 - Authored `tests/test_logging.py` — 6 tests covering import, Logger type, name, file creation, dir-not-file regression, message write.
 - Added `tests/test_evaluate.py` (7 tests) and `tests/test_tune.py` (4 tests) covering noise injection, threshold validation, and Optuna objective.
 - Added `logs/` to `.gitignore`; annotated `requirements.txt` clarifying `custom_logging` uses stdlib only.
 - Added root `conftest.py` and `tests/conftest.py` to fix pytest path resolution without removing `tests/__init__.py`.
+
+### Week 3: Inference Pipeline & Full Test Coverage
+- Authored `src/predict.py` — production inference script; loads `pipeline.pkl` + tuned threshold from `eval_metrics.json`, accepts CSV input via CLI, outputs `outputs/predictions.csv` with probabilities and binary predictions.
+- Wrote `tests/test_ingest.py` (7 tests) — covers required sensor columns, binary target, failure rate assertion, null check, and minimum row count.
+- Wrote `tests/test_train.py` (8 tests) — covers imblearn vs sklearn Pipeline guard, step names/types, param loading from file vs default, and end-to-end fit on small data.
+
+---
+
+## Anandhika — Week-by-Week Log
+
+**Project:** Contextual Predictive Maintenance (IoT Edge AI)
+**Company:** Infotact Solutions & Co.
+
+### Week 1: Environment Setup & Codebase Familiarisation
+- Cloned the repository and configured local Python environment with all dependencies from `requirements.txt`.
+- Reviewed project architecture: data flow from raw CSV → rolling features → fused context → LightGBM pipeline.
+- Studied SMOTE-inside-CV constraint and verified `imblearn.Pipeline` usage in `src/train.py`.
+- Verified CI workflow (`.github/workflows/ci.yml`) triggers correctly on branch push.
+- **Current Status:** Local environment fully operational; ready to support feature work and review.
 
 ---
 
