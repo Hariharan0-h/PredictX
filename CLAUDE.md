@@ -24,6 +24,12 @@ python src/evaluate.py        # Task 1.5 — noise injection, PR curve, threshol
 # SHAP explainability
 python src/explain.py
 
+# Hyperparameter tuning (run before train.py to inject best params)
+python src/tune.py --trials 50
+
+# Inference on new data
+python src/predict.py --input path/to/sensors.csv
+
 # Run a single test
 pytest tests/test_features.py -v
 pytest tests/ -k "test_smote_leakage" -v
@@ -48,8 +54,12 @@ nbstripout notebooks/*.ipynb
 │   ├── features.py        # Rolling window (mean/std/var, window=10) on 5 sensor cols
 │   ├── context.py         # Simulates ambient_temp_ext + factory_load; ablation study
 │   ├── train.py           # Pipeline: StandardScaler → SMOTE → LightGBMClassifier
-│   └── evaluate.py        # Noise injection (σ=0.1×feat_std), PR curve, threshold sweep
+│   ├── evaluate.py        # Noise injection (σ=0.1×feat_std), PR curve, threshold sweep
+│   ├── explain.py         # SHAP TreeExplainer — bar + beeswarm plots, top-10 JSON
+│   ├── tune.py            # Optuna TPE sweep (50 trials) → results/best_params.json
+│   └── predict.py         # Inference: loads pipeline.pkl + tuned threshold, scores CSV
 ├── tests/
+├── custom_logging/        # Stdlib structured logger — no pip install needed
 └── requirements.txt
 ```
 
