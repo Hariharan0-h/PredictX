@@ -27,6 +27,11 @@ TARGET_COL = "Machine failure"
 
 
 def download_dataset() -> pd.DataFrame:
+    """
+    Downloads the AI4I 2020 Predictive Maintenance Dataset from  UCI ML Repository.
+    Combines features and target variables into a single unified pandas Dataframe.
+    
+    """
     logger.info("Fetching AI4I 2020 Predictive Maintenance Dataset from UCI...")
     dataset = fetch_ucirepo(id=601)
     df = pd.concat([dataset.data.features, dataset.data.targets], axis=1)
