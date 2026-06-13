@@ -57,6 +57,10 @@ def validate(df: pd.DataFrame) -> None:
 
 
 def main() -> pd.DataFrame:
+    """
+    Execute the full data ingestion pipeline: creates data directories,
+    downloads the raw telemetry dataset,validates it,and save it as parquet.
+    """
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     df = download_dataset()
     validate(df)
