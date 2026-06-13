@@ -39,6 +39,11 @@
 - Added SHAP TreeExplainer explainability (`src/explain.py`) — bar + beeswarm plots, top-10 JSON.
 - Wrote Optuna TPE hyperparameter sweep (`src/tune.py`) — 50 trials, saves `results/best_params.json` for auto-load in train.py.
 
+### Week 3: Inference Pipeline & Full Test Coverage
+- Authored `src/predict.py` — production inference script; loads `pipeline.pkl` + tuned threshold from `eval_metrics.json`, accepts CSV input via CLI, outputs `outputs/predictions.csv` with probabilities and binary predictions.
+- Wrote `tests/test_ingest.py` (7 tests) — covers required sensor columns, binary target, failure rate assertion, null check, and minimum row count.
+- Wrote `tests/test_train.py` (8 tests) — covers imblearn vs sklearn Pipeline guard, step names/types, param loading from file vs default, and end-to-end fit on small data.
+
 ### Week 2: Observability & Test Coverage
 - Wired `custom_logging` structured logger into all 7 src files — replaced all `print()` calls with `logger.info()`.
 - Authored `tests/test_logging.py` — 6 tests covering import, Logger type, name, file creation, dir-not-file regression, message write.
