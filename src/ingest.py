@@ -39,6 +39,10 @@ def download_dataset() -> pd.DataFrame:
 
 
 def validate(df: pd.DataFrame) -> None:
+    """
+    Validates the schema,checks for missing expected columns,and verifies the baseline machine failure rate is 
+    within acceptance limits (<5%).
+    """
     missing = [c for c in SENSOR_COLS + [TARGET_COL] if c not in df.columns]
     if missing:
         raise ValueError(f"Missing expected columns: {missing}")
