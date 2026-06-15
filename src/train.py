@@ -44,6 +44,7 @@ def load_clf_params() -> dict:
 
 
 def build_pipeline() -> Pipeline:
+    """Builds a machine learning pipeline with scaling,SMOTE, and LightGBM classifier."""
     return Pipeline([
         ("scaler", StandardScaler()),
         ("smote",  SMOTE(random_state=RANDOM_STATE)),
