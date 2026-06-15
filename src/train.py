@@ -53,6 +53,7 @@ def build_pipeline() -> Pipeline:
 
 
 def main() -> dict:
+    """Executes the model training pipeline including cross-validation and evaluation."""
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
