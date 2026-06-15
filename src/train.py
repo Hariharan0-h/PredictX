@@ -33,6 +33,7 @@ DEFAULT_CLF_PARAMS = {"n_estimators": 300, "learning_rate": 0.05, "num_leaves": 
 
 
 def load_clf_params() -> dict:
+    """Loads the classifier hyperparameters from a JSON file or returns defaults."""
     if BEST_PARAMS_PATH.exists():
         with open(BEST_PARAMS_PATH) as f:
             data = json.load(f)
