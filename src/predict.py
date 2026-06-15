@@ -50,7 +50,7 @@ def load_threshold(override: float | None) -> float:
 
 
 def load_feature_cols() -> list[str]:
-    """Loads the list of feature columns used during model training ."""
+    """Loads the list of feature columns used during model trainingS ."""
     if not CV_SCORES_PATH.exists():
         raise FileNotFoundError(
             f"{CV_SCORES_PATH} not found. Run train.py first."
