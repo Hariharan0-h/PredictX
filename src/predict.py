@@ -35,6 +35,7 @@ DEFAULT_THRESHOLD = 0.5
 
 
 def load_threshold(override: float | None) -> float:
+    """Loads the decision threshold from evaluation metrices or uses the deafault."""
     if override is not None:
         logger.info(f"Using CLI-supplied threshold: {override}")
         return override
@@ -49,6 +50,7 @@ def load_threshold(override: float | None) -> float:
 
 
 def load_feature_cols() -> list[str]:
+    """Loads the list of feature columns used during model training ."""
     if not CV_SCORES_PATH.exists():
         raise FileNotFoundError(
             f"{CV_SCORES_PATH} not found. Run train.py first."
