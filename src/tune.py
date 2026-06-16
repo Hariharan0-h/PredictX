@@ -37,6 +37,7 @@ except ImportError:
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from custom_logging import logger
+from exception import CustomException
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 RESULTS_DIR = Path(__file__).parent.parent / "results"
@@ -121,7 +122,10 @@ def main(n_trials: int = DEFAULT_TRIALS) -> dict:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--trials", type=int, default=DEFAULT_TRIALS)
-    args = parser.parse_args()
-    main(n_trials=args.trials)
+    try:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--trials", type=int, default=DEFAULT_TRIALS)
+        args = parser.parse_args()
+        main(n_trials=args.trials)
+    except Exception as e:
+        raise CustomException(e, sys)
