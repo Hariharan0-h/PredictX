@@ -30,6 +30,12 @@ python src/tune.py --trials 50
 # Inference on new data
 python src/predict.py --input path/to/sensors.csv
 
+# Feature drift detection
+python src/drift.py --train data/features_fused.parquet --new path/to/new.csv
+
+# Generate model performance report
+python src/report.py
+
 # Run a single test
 pytest tests/test_features.py -v
 pytest tests/ -k "test_smote_leakage" -v
@@ -57,7 +63,9 @@ nbstripout notebooks/*.ipynb
 │   ├── evaluate.py        # Noise injection (σ=0.1×feat_std), PR curve, threshold sweep
 │   ├── explain.py         # SHAP TreeExplainer — bar + beeswarm plots, top-10 JSON
 │   ├── tune.py            # Optuna TPE sweep (50 trials) → results/best_params.json
-│   └── predict.py         # Inference: loads pipeline.pkl + tuned threshold, scores CSV
+│   ├── predict.py         # Inference: loads pipeline.pkl + tuned threshold, scores CSV
+│   ├── drift.py           # KS-test feature drift detection vs training baseline
+│   └── report.py          # Collates all results/ JSON into results/model_report.md
 ├── tests/
 ├── custom_logging/        # Stdlib structured logger — no pip install needed
 └── requirements.txt
