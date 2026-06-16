@@ -1,0 +1,39 @@
+# Data & model artifacts — never commit
+data/*.csv
+data/*.parquet
+data/*.bin
+models/
+*.pt
+*.h5
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/*.ipynb
+
+# Env & secrets
+.env
+
+# Test cache
+.pytest_cache/
+pytest-cache-files-*/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs (generated plots — optional to commit)
+outputs/*.png
+outputs/*.html
+
+# Runtime log files
+logs/
