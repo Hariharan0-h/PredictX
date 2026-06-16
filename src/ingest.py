@@ -27,6 +27,11 @@ TARGET_COL = "Machine failure"
 
 
 def download_dataset() -> pd.DataFrame:
+    """
+    Downloads the AI4I 2020 Predictive Maintenance Dataset from  UCI ML Repository.
+    Combines features and target variables into a single unified pandas Dataframe.
+    
+    """
     logger.info("Fetching AI4I 2020 Predictive Maintenance Dataset from UCI...")
     dataset = fetch_ucirepo(id=601)
     df = pd.concat([dataset.data.features, dataset.data.targets], axis=1)
@@ -34,6 +39,10 @@ def download_dataset() -> pd.DataFrame:
 
 
 def validate(df: pd.DataFrame) -> None:
+    """
+    Validates the schema,checks for missing expected columns,and verifies the baseline machine failure rate is 
+    within acceptance limits (<5%).
+    """
     missing = [c for c in SENSOR_COLS + [TARGET_COL] if c not in df.columns]
     if missing:
         raise ValueError(f"Missing expected columns: {missing}")
@@ -48,6 +57,10 @@ def validate(df: pd.DataFrame) -> None:
 
 
 def main() -> pd.DataFrame:
+    """
+    Execute the full data ingestion pipeline: creates data directories,
+    downloads the raw telemetry dataset,validates it,and save it as parquet.
+    """
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     df = download_dataset()
     validate(df)
