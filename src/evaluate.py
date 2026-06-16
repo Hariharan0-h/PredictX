@@ -17,6 +17,7 @@ from sklearn.model_selection import train_test_split
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from custom_logging import logger
+from exception import CustomException
 
 DATA_DIR    = Path(__file__).parent.parent / "data"
 MODELS_DIR  = Path(__file__).parent.parent / "models"
@@ -111,4 +112,7 @@ def main() -> dict:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        raise CustomException(e, sys)

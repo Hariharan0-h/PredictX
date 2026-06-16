@@ -11,6 +11,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from custom_logging import logger
+from exception import CustomException
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 INPUT_PATH = DATA_DIR / "raw.parquet"
@@ -54,4 +55,7 @@ def main() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        raise CustomException(e, sys)

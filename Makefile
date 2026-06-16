@@ -1,4 +1,4 @@
-.PHONY: pipeline tune predict drift test coverage clean
+.PHONY: pipeline tune predict drift report test coverage clean
 
 # Run the full ML pipeline end-to-end
 pipeline:
@@ -27,6 +27,10 @@ predict:
 NEW ?=
 drift:
 	python src/drift.py --train data/features_fused.parquet --new $(NEW)
+
+# Generate Markdown model performance report from results/ JSON files
+report:
+	python src/report.py
 
 # Run the full test suite
 test:
