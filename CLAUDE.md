@@ -68,6 +68,7 @@ nbstripout notebooks/*.ipynb
 │   └── report.py          # Collates all results/ JSON into results/model_report.md
 ├── tests/
 ├── custom_logging/        # Stdlib structured logger — no pip install needed
+├── exception/             # CustomException: captures script name + line number on failure
 └── requirements.txt
 ```
 
