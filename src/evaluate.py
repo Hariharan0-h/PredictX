@@ -44,6 +44,7 @@ TEST_SIZE    = 0.2
 def inject_noise(X: pd.DataFrame, sensor_cols: list[str], scale: float, seed: int) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     X_noisy = X.copy()
+    logger.info(f"Injecting noise into sensor columns with scale {scale}")
     for col in sensor_cols:
         if col in X_noisy.columns:
             sigma = X_noisy[col].std() * scale
