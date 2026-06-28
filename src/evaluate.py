@@ -49,6 +49,7 @@ def inject_noise(X: pd.DataFrame, sensor_cols: list[str], scale: float, seed: in
         if col in X_noisy.columns:
             sigma = X_noisy[col].std() * scale
             X_noisy[col] += rng.normal(0, sigma, size=len(X_noisy))
+    logger.info("Noise injection completed successfully.")
     return X_noisy
 
 
