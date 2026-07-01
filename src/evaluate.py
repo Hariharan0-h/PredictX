@@ -57,7 +57,7 @@ def find_best_threshold(y_true, y_scores) -> tuple[float, float]:
     precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
     f1s = 2 * precision * recall / (precision + recall + 1e-9)
     best_idx = np.argmax(f1s[:-1])
-    logger.info(f"Best threshold found:{thresholds[best_idx]} with F1:{[best_idx]}")
+    logger.info(f"Best threshold found:{thresholds[best_idx]} with F1:{f1s[best_idx]}")
     return float(thresholds[best_idx]), float(f1s[best_idx])
 
 
