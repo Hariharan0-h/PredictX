@@ -26,6 +26,7 @@
 - **Tasks Completed:** Successfully built and integrated comprehensive model evaluation logging, noise injection handling, and precision-recall threshold optimization.
 - *Files Modified:*
     - src/evaluate.py (Implemented complete evaluation pipeline, noise scaling, and performance tracking)
+    - custom_logging/logger.py (Fixed AttributeError by attaching LOGS_DIR to the logger object)
 - *Commit Target:* Completed structural validation and robust logging enhancements for the evaluation codebase.
 - *Current Status:* Core evaluation pipeline fully functional, verified with precise threshold outputs, and synchronized with remote repository.
 -
