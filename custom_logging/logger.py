@@ -18,3 +18,4 @@ logging.basicConfig(
 
 logger = logging.getLogger("predictx")
 logger.LOGS_DIR = LOGS_DIR
+logger.LOGS_FILE_PATH = LOG_FILE_PATH
