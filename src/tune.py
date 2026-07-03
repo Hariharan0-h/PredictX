@@ -47,6 +47,7 @@ TARGET_COL = "Machine failure"
 RANDOM_STATE = 42
 N_CV_SPLITS = 5
 DEFAULT_TRIALS = 50
+TIMEOUT_SECONDS= 3600
 
 
 def load_data() -> tuple[pd.DataFrame, pd.Series]:
