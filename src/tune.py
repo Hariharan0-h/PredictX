@@ -77,6 +77,7 @@ def objective(trial, X: pd.DataFrame, y: pd.Series) -> float:
             random_state=RANDOM_STATE,
             verbose=-1,
             n_jobs=1,
+            importance_type='gain'
         )),
     ])
 
