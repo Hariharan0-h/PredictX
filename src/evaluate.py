@@ -44,10 +44,12 @@ TEST_SIZE    = 0.2
 def inject_noise(X: pd.DataFrame, sensor_cols: list[str], scale: float, seed: int) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     X_noisy = X.copy()
+    logger.info(f"Injecting noise into sensor columns with scale {scale}")
     for col in sensor_cols:
         if col in X_noisy.columns:
             sigma = X_noisy[col].std() * scale
             X_noisy[col] += rng.normal(0, sigma, size=len(X_noisy))
+    logger.info("Noise injection completed successfully.")
     return X_noisy
 
 
@@ -55,6 +57,7 @@ def find_best_threshold(y_true, y_scores) -> tuple[float, float]:
     precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
     f1s = 2 * precision * recall / (precision + recall + 1e-9)
     best_idx = np.argmax(f1s[:-1])
+    logger.info(f"Best threshold found:{thresholds[best_idx]} with F1:{f1s[best_idx]}")
     return float(thresholds[best_idx]), float(f1s[best_idx])
 
 

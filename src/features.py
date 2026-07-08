@@ -28,6 +28,8 @@ WINDOW = 10
 
 
 def make_rolling_features(df: pd.DataFrame, window: int = WINDOW) -> pd.DataFrame:
+    """Calculate rolling mean and standard deviation features for sensor columns."""
+
     df = df.copy().reset_index(drop=True)
     for col in SENSOR_COLS:
         safe = col.replace(" ", "_").replace("[", "").replace("]", "").replace("/", "_")
@@ -42,6 +44,7 @@ def make_rolling_features(df: pd.DataFrame, window: int = WINDOW) -> pd.DataFram
 
 
 def main() -> pd.DataFrame:
+    """Executes the rolling feature engineering pipeline and saves output to parquet."""
     df_raw = pd.read_parquet(INPUT_PATH)
     logger.info(f"Loaded raw data: {df_raw.shape}")
 
