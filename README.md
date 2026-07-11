@@ -12,6 +12,7 @@ done with preprocessing.
 # week 2 - Contextual data infusion and feature engineering
 
 load the preprocessed dataset and create a timestamp column
+
 create external context data - Timestamp'
     'ambient_temp'
     'humidity'
@@ -22,7 +23,15 @@ create contextual features - Ambient Gap, Load Stress, Heat Stress, Mechanical S
 # Abalaton study
 
 model done with randon forest
+
 ----- Ablation Study Results -----
+
 Model A (Internal Only): 0.6520
+
 Model B (Internal + Context): 0.6619
+
 Improvement: 0.0100
+
+# week 3 - Week 3: Imbalanced Classification and LightGBM Modeling
+
+handled imbalanced dataset using SMOTE ----> CV ---------> 
