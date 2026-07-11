@@ -34,4 +34,32 @@ Improvement: 0.0100
 
 # week 3 - Week 3: Imbalanced Classification and LightGBM Modeling
 
-handled imbalanced dataset using SMOTE ----> CV ---------> 
+handled imbalanced dataset using SMOTE ----> CV ---------> MODELLING WITH LIGHTGBM
+
+# week 4 : noise sensitivity and threshold tuning
+
+Overall Conclusion
+
+The model demonstrates excellent predictive performance with:
+
+---------------------------
+Accuracy: ~99.55%
+
+Precision (Failure class): 89%
+
+Recall (Failure class): 99%
+
+F1-score: 94%
+
+ROC-AUC: 0.9970
+
+-----------------------------------
+
+1) 1924 normal machines correctly identified.
+2) 67 failures correctly detected.
+3) 8 false alarms (normal predicted as failure).
+4) 1 missed failure.
+
+----------------------------------------
+
+These results indicate that the model is highly effective for predictive maintenance, as it detects nearly all machine failures while keeping false alarms to a minimum. This balance makes it well-suited for real-world industrial applications, where early and accurate failure detection can reduce unplanned downtime, optimize maintenance schedules, and lower operational costs.
